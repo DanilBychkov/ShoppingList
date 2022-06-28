@@ -13,9 +13,8 @@ object ShopListRepositoryImpl:ShopListRepository {
     init{
         for (i in 1..10){
             val item =ShoppingListItem("Name $i",i,true)
-            shopList.add(item)
+            addShopList(item)
         }
-
     }
 
     override fun addShopList(shopItem: ShoppingListItem) {

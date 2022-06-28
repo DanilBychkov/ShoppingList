@@ -7,6 +7,8 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.R
+import com.example.shoppinglist.data.ShopListRepositoryImpl
+import com.example.shoppinglist.domain.ShoppingListItem
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
@@ -19,10 +21,8 @@ class MainActivity : AppCompatActivity() {
         setupRecyclerView()
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         Toast.makeText(this, viewModel.shopList.value?.size.toString(), Toast.LENGTH_SHORT).show()
-            //нет элементов в списке
         viewModel.shopList.observe(this){
             adapter.shopList=it
-            Toast.makeText(this, it.size.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 
