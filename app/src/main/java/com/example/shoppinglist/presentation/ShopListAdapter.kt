@@ -5,16 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.R
 import com.example.shoppinglist.domain.ShoppingListItem
 
-class ShopListAdapter:RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>() {
-    var shopList = listOf<ShoppingListItem>()
-        set(value) {
-            field=value
-            notifyDataSetChanged()
-        }
+class ShopListAdapter:ListAdapter<ShoppingListItem,ShopListAdapter.ShopItemViewHolder> (ShopItemDiffCallBack()){
+
+    var onShopItemLongClickListener:((ShoppingListItem) -> Unit)?=null
+    var onShopItemShortClickListener:((ShoppingListItem)->Unit)?=null
 
     class ShopItemViewHolder(val view:View):RecyclerView.ViewHolder(view){
         val tvName= view.findViewById<TextView>(R.id.name_object)
@@ -34,23 +34,28 @@ class ShopListAdapter:RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>()
     }
 
     override fun onBindViewHolder(holder: ShopItemViewHolder, position: Int) {
-        val shopItem = shopList[position]
+        val shopItem = getItem(position)
         holder.tvName.text=shopItem.name
         holder.tvCount.text= shopItem.count.toString()
-        holder.view.setOnClickListener { true }
+        holder.view.setOnClickListener() {
+            onShopItemShortClickListener?.invoke(shopItem)
+            true
+
+        }
+        holder.view.setOnLongClickListener() {
+            onShopItemLongClickListener?.invoke(shopItem)
+            true
+        }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if(shopList[position].enabled){
+        return if(getItem(position).enabled){
             VIEW_TYPE_ENABLED
         }else{
             VIEW_TYPE_DISABLED
         }
     }
 
-    override fun getItemCount(): Int {
-        return shopList.size
-    }
 
     companion object{
         const val VIEW_TYPE_ENABLED=0
