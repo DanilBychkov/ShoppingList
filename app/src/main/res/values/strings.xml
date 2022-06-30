@@ -2,4 +2,6 @@
     <string name="app_name">shoppingList</string>
     <string name="number_1">1</string>
     <string name="napkins">Салфетки</string>
+    <string name="plus">plus</string>
+    <string name="save">Save</string>
 </resources>
