@@ -4,4 +4,6 @@
     <string name="napkins">Салфетки</string>
     <string name="plus">plus</string>
     <string name="save">Save</string>
+    <string name="error_input_name">Error Input Name</string>
+    <string name="error_input_count">Error Input Count</string>
 </resources>
